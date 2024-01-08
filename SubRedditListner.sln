@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubRedditListner", "SubRedditListner\SubRedditListner.csproj", "{2DADABE8-4526-41EF-9B8A-8F29CF5848F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubRedditListner.Services", "SubRedditListner.Services\SubRedditListner.Services.csproj", "{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2DADABE8-4526-41EF-9B8A-8F29CF5848F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DADABE8-4526-41EF-9B8A-8F29CF5848F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DADABE8-4526-41EF-9B8A-8F29CF5848F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DADABE8-4526-41EF-9B8A-8F29CF5848F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {19461E9A-E96D-4D1D-9B01-280FBC82A47B}
+	EndGlobalSection
+EndGlobal
