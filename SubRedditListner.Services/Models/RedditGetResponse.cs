@@ -1,11 +1,19 @@
-﻿namespace SubRedditListner.Services.Models
+﻿using System;
+
+namespace SubRedditListner.Services.Models
 {
     public class RedditGetResponse
     {
         public RedditGetResponseContent? Content { get; set; }
         public RedditGetResponseHeader? Header { get; set; }
+
+        internal int GetInterval()
+        {
+            return (Header?.RateLimitReset / Header?.RateLimitRemaining) ?? 1000;
+        }
+
         public class RedditGetResponseHeader
-        { 
+        {
             public int RateLimitRemaining { get; set; }
             public int RateLimitUsed { get; set; }
             public int RateLimitReset { get; set; }
