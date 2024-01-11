@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Net.Http.Headers;
 
 namespace SubRedditListner.Services
 {
@@ -17,14 +18,10 @@ namespace SubRedditListner.Services
         }
         public async Task<RedditAuthResponse?> RetrieveToken()
         {
-            var content = new FormUrlEncodedContent(new Dictionary<string, string>()
-                                                    {
-                                                        {"grant_type", "client_credentials" }
-                                                    });
-
+            HttpContent content = new StringContent("grant_type=client_credentials", Encoding.UTF8, "application/x-www-form-urlencoded");
             var response = await _httpClient.PostAsync("access_token", content);
-            return JsonSerializer.Deserialize<RedditAuthResponse>(await response.Content.ReadAsStringAsync());
-
+            var tokenString = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<RedditAuthResponse>(tokenString);
         }
     }
 }

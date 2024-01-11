@@ -6,6 +6,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Net;
 using static SubRedditListner.Services.Models.RedditGetResponse;
+using System.Linq;
 
 namespace SubRedditListner.Services
 {
@@ -31,12 +32,13 @@ namespace SubRedditListner.Services
                 var httpResponse = await _httpClient.GetAsync("/r/funny/new");
                 if (httpResponse.IsSuccessStatusCode)
                 {
-                    response.Content = JsonSerializer.Deserialize<RedditGetResponseContent>(await httpResponse.Content.ReadAsStringAsync());
+                    var jsonString = await httpResponse.Content.ReadAsStringAsync();
+                    response.Content = JsonSerializer.Deserialize<RedditGetResponseContent>(jsonString);
                     response.Header = new RedditGetResponseHeader()
                     {
-                        RateLimitRemaining = httpResponse.Headers.TryGetValues("x-ratelimit-remaining", out var rateLimitRemaining) ? Convert.ToInt32(rateLimitRemaining) : 0,
-                        RateLimitReset = httpResponse.Headers.TryGetValues("x-ratelimit-reset", out var rateLimitReset) ? Convert.ToInt32(rateLimitReset) : 0,
-                        RateLimitUsed = httpResponse.Headers.TryGetValues("x-ratelimit-used", out var rateLimitUsed) ? Convert.ToInt32(rateLimitUsed) : 0
+                        RateLimitRemaining = httpResponse.Headers.TryGetValues("x-ratelimit-remaining", out var rateLimitRemaining) ? Convert.ToDouble(rateLimitRemaining.FirstOrDefault()) : 0,
+                        RateLimitReset = httpResponse.Headers.TryGetValues("x-ratelimit-reset", out var rateLimitReset) ? Convert.ToDouble(rateLimitReset.FirstOrDefault()) : 0,
+                        RateLimitUsed = httpResponse.Headers.TryGetValues("x-ratelimit-used", out var rateLimitUsed) ? Convert.ToDouble(rateLimitUsed.FirstOrDefault()) : 0
                     };
 
                 }
@@ -57,7 +59,7 @@ namespace SubRedditListner.Services
             var tokenResponse = await _authClient.RetrieveToken();
             if (tokenResponse != null)
             {
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse?.Access_token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", tokenResponse?.access_token);
             }
         }
     }

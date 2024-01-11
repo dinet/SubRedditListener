@@ -21,8 +21,10 @@ namespace SubRedditListner.Services
             while (true)
             {
                 var response = await _redditPostClient.PostAsync();
-                interval = response.GetInterval();
+                interval = response.GetIntervalInMiliSeconds();
+                Console.WriteLine($"Interval : {interval}, RateLimitReset:{response.Header.RateLimitReset}, RateLimitRemaining:{response.Header.RateLimitRemaining}");
                 await Task.Delay(interval, cancellationToken);
+               
             }
         }
     }

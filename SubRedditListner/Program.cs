@@ -41,15 +41,15 @@ internal class Program
                         .ConfigureHttpClient((serviceProvider, client) =>
                         {
                             client.BaseAddress = new Uri(ApiConfig.TokenUrl);
-                            var byteArray = Encoding.ASCII.GetBytes($"{ApiConfig.ClientId}:{ApiConfig.ClientSecret}");
-                            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
+                            var byteArray = Encoding.ASCII.GetBytes($"{ApiConfig.ClientId}:{ApiConfig.ClientSecret}"); 
+                            client.DefaultRequestHeaders.Add("Authorization", $"Basic {Convert.ToBase64String(byteArray)}");
                             client.DefaultRequestHeaders.Add("User-Agent", ApiConfig.AgentName);
                         });
 
         builder.Services.AddHttpClient<IRedditPostClient, RedditPostClient>()
                         .ConfigureHttpClient((serviceProvider, client) =>
                         {
-                            client.BaseAddress = new Uri(ApiConfig.TokenUrl);
+                            client.BaseAddress = new Uri(ApiConfig.BaseUrl);
                             client.DefaultRequestHeaders.Add("User-Agent", ApiConfig.AgentName);
                         });
         builder.Services.AddTransient<IRateLimitedHttpClient, RateLimitedHttpClient>();

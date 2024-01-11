@@ -7,16 +7,16 @@ namespace SubRedditListner.Services.Models
         public RedditGetResponseContent? Content { get; set; }
         public RedditGetResponseHeader? Header { get; set; }
 
-        internal int GetInterval()
+        internal int GetIntervalInMiliSeconds()
         {
-            return (Header?.RateLimitReset / Header?.RateLimitRemaining) ?? 1000;
+            return Convert.ToInt32((Header?.RateLimitReset*1000 / Header?.RateLimitRemaining) ?? 1000);
         }
 
         public class RedditGetResponseHeader
         {
-            public int RateLimitRemaining { get; set; }
-            public int RateLimitUsed { get; set; }
-            public int RateLimitReset { get; set; }
+            public double RateLimitRemaining { get; set; }
+            public double RateLimitUsed { get; set; }
+            public double RateLimitReset { get; set; }
         }
         public class RedditGetResponseContent
         {
