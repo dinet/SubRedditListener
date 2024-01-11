@@ -10,6 +10,6 @@ namespace SubRedditListner.Services
 {
     public interface IRedditAuthClient
     {
-        public Task<RedditAuthResponse> RetrieveToken();
+        public Task<RedditAuthResponse?> RetrieveToken();
     }
 }

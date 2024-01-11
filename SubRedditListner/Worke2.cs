@@ -1,3 +1,5 @@
+using System.Threading;
+
 namespace SubRedditListner
 {
     public class Worker2 : BackgroundService
@@ -13,8 +15,14 @@ namespace SubRedditListner
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogError("Worker 2 running at: {time}", DateTimeOffset.Now);
-                await Task.Delay(200, stoppingToken);
+
+    //            while (true)
+    //            {
+    //                await FooAsync();
+    //                await Task.Delay(interval, cancellationToken)
+    //}
+    //            _logger.LogError("Worker 2 running at: {time}", DateTimeOffset.Now);
+    //            await Task.Delay(200, stoppingToken);
             }
         }
     }

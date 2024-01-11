@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace SubRedditListner.Services
 {
@@ -14,7 +15,7 @@ namespace SubRedditListner.Services
         {
             _httpClient = httpClient;
         }
-        public async Task<RedditAuthResponse> RetrieveToken()
+        public async Task<RedditAuthResponse?> RetrieveToken()
         {
             var content = new FormUrlEncodedContent(new Dictionary<string, string>()
                                                     {
@@ -22,7 +23,8 @@ namespace SubRedditListner.Services
                                                     });
 
             var response = await _httpClient.PostAsync("access_token", content);
-            return new RedditAuthResponse();
+            return JsonSerializer.Deserialize<RedditAuthResponse>(await response.Content.ReadAsStringAsync());
+
         }
     }
 }
