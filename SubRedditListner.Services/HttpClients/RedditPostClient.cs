@@ -29,7 +29,7 @@ namespace SubRedditListner.Services
                 {
                     await SetAuthTokenAsync();
                 }
-                var httpResponse = await _httpClient.GetAsync("/r/funny/new");
+                var httpResponse = await _httpClient.GetAsync("/r/AskReddit/new");
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var jsonString = await httpResponse.Content.ReadAsStringAsync();

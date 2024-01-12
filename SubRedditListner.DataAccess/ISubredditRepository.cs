@@ -10,5 +10,7 @@ namespace SubRedditListner.DataAccess
         void AddOrUpdateItem(SubRedditPost subRedditPost);
         IList<SubRedditPost> GetAllItems();
         SubRedditPost GetItem(string id );
+        IList<string> GetPostsWithMostUpvotes();
+        IList<string> GetUsersWithMostPosts();
     }
 }

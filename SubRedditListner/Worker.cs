@@ -17,9 +17,17 @@ namespace SubRedditListner
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                _logger.LogInformation($"Worker running at: {_subredditRepository.GetAllItems().Count()}", _subredditRepository.GetAllItems().Count());
+
+                _logger.LogInformation(
+                    $"\n\n ---------------------- Top 10 Posts with most upvotes ----------------- \n" +
+                    $"{string.Join("\n", _subredditRepository.GetPostsWithMostUpvotes().ToArray())} " +
+                    "\n -----------------------------------------------------------------------------\n"+
+                    $"\n\n ------------------------- Top 10 Users with most posts ---------------- \n" +
+                    $"{string.Join("\n", _subredditRepository.GetUsersWithMostPosts().ToArray())}"); 
                 await Task.Delay(1000, stoppingToken);
             }
         }
+
+
     }
 }

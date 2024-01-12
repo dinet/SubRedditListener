@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Collections.Concurrent;
 
@@ -27,5 +23,14 @@ namespace SubRedditListner.DataAccess
             return posts.Values.ToList();
         }
 
+        public IList<string> GetPostsWithMostUpvotes()
+        {
+            return posts?.Values?.OrderBy(i => i.Upvotes).Take(10).Select(i => i.Title).ToList() ?? new List<string>();
+        }
+
+        public IList<string> GetUsersWithMostPosts()
+        {
+            return posts?.Values?.GroupBy(i => i.UserId).OrderByDescending(q => q.Count()).Take(10).Select(i => i.Key).ToList() ?? new List<string>();
+        }
     }
 }
