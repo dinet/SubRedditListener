@@ -21,21 +21,22 @@ namespace SubRedditListner.Services
             _logger = logger;
         }
 
-        public async Task SendAsync()
+        public async Task SendAsync(string url)
         {
 
             while (true)
             {
                 try
                 {
-                    var response = await _redditPostClient.GetAsync();
+                    var response = await _redditPostClient.GetAsync(url);
                     int interval = Math.Max(0, response.GetIntervalInMiliSeconds() - 300);
                     InsertToDatabase(response);
                     _logger.LogDebug($"Interval : {interval}, RateLimitReset:{response?.Header?.RateLimitReset}, RateLimitRemaining:{response?.Header?.RateLimitRemaining}");
                     await Task.Delay(interval);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    _logger.LogError($"Exception : {ex}");
                 }
             }
         }
@@ -44,7 +45,7 @@ namespace SubRedditListner.Services
         {
             Parallel.ForEach(response?.Content?.data?.children, child =>
             {
-                if (_subredditRepository.ItemExists(child.data.id) || DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(child.data.created_utc)).DateTime >= Process.GetCurrentProcess().StartTime)
+                if (_subredditRepository.ItemExists(child?.data?.id) || DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(child?.data?.created_utc)+500).LocalDateTime >= Process.GetCurrentProcess().StartTime)
                 {
                     _subredditRepository.AddOrUpdateItem(new SubRedditPost()
                     {

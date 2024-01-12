@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace SubRedditListner.Services
 {
     public interface IRedditPostClient
-    { 
-        Task<RedditGetResponse> GetAsync();
+    {  
+        Task<RedditGetResponse> GetAsync(string url);
     }
 }

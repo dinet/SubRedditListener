@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace SubRedditListner.Services
 {
     public interface IRateLimitedHttpClient
-    {
-        Task SendAsync();
+    { 
+        Task SendAsync(string uri);
     }
 }
