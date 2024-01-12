@@ -23,14 +23,16 @@ namespace SubRedditListner.Services
 
         public async Task SendAsync()
         {
+            var after = string.Empty;
             while (true)
             {
                 try
                 {
-                    var response = await _redditPostClient.PostAsync();
+                    var response = await _redditPostClient.GetAsync(after);
+                    after = response?.Content?.data?.after;
                     int interval = Math.Max(0, response.GetIntervalInMiliSeconds() - 300);
                     InsertToDatabase(response);
-                    _logger.LogDebug($"Interval : {interval}, RateLimitReset:{response?.Header?.RateLimitReset}, RateLimitRemaining:{response?.Header?.RateLimitRemaining}");
+                    _logger.LogDebug($"Interval : {interval}, afterToken: {after} RateLimitReset:{response?.Header?.RateLimitReset}, RateLimitRemaining:{response?.Header?.RateLimitRemaining}");
                     await Task.Delay(interval);
                 }
                 catch (Exception)

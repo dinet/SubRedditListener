@@ -8,6 +8,6 @@ namespace SubRedditListner.Services
 {
     public interface IRedditPostClient
     {
-        Task<RedditGetResponse> PostAsync();
+        Task<RedditGetResponse> GetAsync(string after);
     }
 }

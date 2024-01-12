@@ -19,7 +19,7 @@ namespace SubRedditListner.Services
             _httpClient = httpClient;
             _authClient = authClient;
         }
-        public async Task<RedditGetResponse> PostAsync()
+        public async Task<RedditGetResponse> GetAsync(string after)
         {
             var response = new RedditGetResponse();
             try
@@ -29,7 +29,7 @@ namespace SubRedditListner.Services
                 {
                     await SetAuthTokenAsync();
                 }
-                var httpResponse = await _httpClient.GetAsync("/r/AskReddit/new");
+                var httpResponse = await _httpClient.GetAsync($"/r/AskReddit/new?after={after}?limit=100");
                 if (httpResponse.IsSuccessStatusCode)
                 {
                     var jsonString = await httpResponse.Content.ReadAsStringAsync();
