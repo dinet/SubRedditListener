@@ -1,12 +1,9 @@
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Http;
-using Microsoft.Extensions.Options;
 using SubRedditListner;
 using SubRedditListner.DataAccess;
 using SubRedditListner.Services;
-using System.Net.Http.Headers;
-using System.Runtime.CompilerServices;
+using SubRedditListner.Configurations;
 using System.Text;
 
 internal class Program
