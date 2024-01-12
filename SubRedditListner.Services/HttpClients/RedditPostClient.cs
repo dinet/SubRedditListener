@@ -24,7 +24,7 @@ namespace SubRedditListner.Services
             var response = new RedditGetResponse();
             try
             {
-                //If token is not set, we need to set it 
+                //Set token if its not already set. 
                 if (_httpClient.DefaultRequestHeaders.Authorization == null)
                 {
                     await SetAuthTokenAsync();

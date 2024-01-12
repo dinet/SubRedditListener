@@ -59,10 +59,12 @@ internal class Program
         builder.Services.AddTransient<IRateLimitedHttpClient, RateLimitedHttpClient>();
         builder.Services.AddSingleton<ISubredditRepository, SubredditRepository>();
 
-       builder.Services.AddHostedService<Worker>();
-        builder.Services.AddHostedService<Worker2>(); 
+        builder.Services.AddHostedService<StatRetriverHostedService>();
 
-        IHost host = builder.Build();      
+        IHost host = builder.Build();
+        var rateLimiter = host.Services.GetService<IRateLimitedHttpClient>();
+        rateLimiter?.SendAsync();
         host.Run();
+
     }
 }
