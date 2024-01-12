@@ -3,8 +3,6 @@ using SubRedditListner.DataAccess;
 using SubRedditListner.Services.Models;
 using System;
 using System.Diagnostics;
-using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SubRedditListner.Services
@@ -14,6 +12,7 @@ namespace SubRedditListner.Services
         private readonly IRedditPostClient _redditPostClient;
         private readonly ISubredditRepository _subredditRepository;
         private readonly ILogger<RateLimitedHttpClient> _logger;
+
         public RateLimitedHttpClient(IRedditPostClient redditPostClient, ISubredditRepository subredditRepository, ILogger<RateLimitedHttpClient> logger)
         {
             _redditPostClient = redditPostClient;
@@ -23,20 +22,23 @@ namespace SubRedditListner.Services
 
         public async Task SendAsync(string url)
         {
-
             while (true)
             {
                 try
-                {
+                { 
                     var response = await _redditPostClient.GetAsync(url);
+
+                    // Calculate interval and log rate limit information
                     int interval = Math.Max(0, response.GetIntervalInMiliSeconds() - 300);
                     InsertToDatabase(response);
-                    _logger.LogDebug($"Interval : {interval}, RateLimitReset:{response?.Header?.RateLimitReset}, RateLimitRemaining:{response?.Header?.RateLimitRemaining}");
+                    _logger.LogDebug($"Interval: {interval}, RateLimitReset: {response?.Header?.RateLimitReset}, RateLimitRemaining: {response?.Header?.RateLimitRemaining}");
+
+                    // Delay before making the next request
                     await Task.Delay(interval);
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError($"Exception : {ex}");
+                    _logger.LogError($"Exception: {ex}");
                 }
             }
         }
@@ -45,7 +47,11 @@ namespace SubRedditListner.Services
         {
             Parallel.ForEach(response?.Content?.data?.children, child =>
             {
-                if (_subredditRepository.ItemExists(child?.data?.id) || DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(child?.data?.created_utc)+500).LocalDateTime >= Process.GetCurrentProcess().StartTime)
+                 //Insert/update items if either these conditions are met.
+                 //1.Item already exists in the database.
+                 //2.item Created is greater than application start time(2 mins buffer added as new posts are approximately 2 mins delayed from create time)
+                if (child?.data != null && (_subredditRepository.ItemExists(child.data?.id) || 
+                        DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(child?.data?.created_utc) + 360).LocalDateTime >= Process.GetCurrentProcess().StartTime))
                 {
                     _subredditRepository.AddOrUpdateItem(new SubRedditPost()
                     {
