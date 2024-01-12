@@ -2,6 +2,7 @@
 using SubRedditListner.DataAccess;
 using SubRedditListner.Services.Models;
 using System;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,7 +44,7 @@ namespace SubRedditListner.Services
         {
             Parallel.ForEach(response?.Content?.data?.children, child =>
             {
-                if (_subredditRepository.ItemExists(child.data.id) || DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(child.data.created_utc)) > DateTimeOffset.UtcNow)
+                if (_subredditRepository.ItemExists(child.data.id) || DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(child.data.created_utc)).DateTime >= Process.GetCurrentProcess().StartTime)
                 {
                     _subredditRepository.AddOrUpdateItem(new SubRedditPost()
                     {
