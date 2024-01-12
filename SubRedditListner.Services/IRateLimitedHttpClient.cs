@@ -5,6 +5,6 @@ namespace SubRedditListner.Services
 {
     public interface IRateLimitedHttpClient
     {
-        Task<HttpResponseMessage> SendAsync();
+        Task SendAsync();
     }
 }

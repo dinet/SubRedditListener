@@ -16,17 +16,10 @@ namespace SubRedditListner
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
+            //while (!stoppingToken.IsCancellationRequested)
+            //{
                 await _rateLimitedHttpClient.SendAsync();
-    //            while (true)
-    //            {
-    //                await FooAsync();
-    //                await Task.Delay(interval, cancellationToken)
-    //}
-    //            _logger.LogError("Worker 2 running at: {time}", DateTimeOffset.Now);
-    //            await Task.Delay(200, stoppingToken);
-            }
+            //}
         }
     }
 }

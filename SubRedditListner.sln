@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubRedditListner", "SubRedditListner\SubRedditListner.csproj", "{2DADABE8-4526-41EF-9B8A-8F29CF5848F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubRedditListner", "SubRedditListner\SubRedditListner.csproj", "{2DADABE8-4526-41EF-9B8A-8F29CF5848F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubRedditListner.Services", "SubRedditListner.Services\SubRedditListner.Services.csproj", "{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SubRedditListner.Services", "SubRedditListner.Services\SubRedditListner.Services.csproj", "{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SubRedditListner.DataAccess", "SubRedditListner.DataAccess\SubRedditListner.DataAccess.csproj", "{95C8D85C-75B7-4ADD-B8F0-1623675AC0B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{721EC50C-D136-4A2F-BF2D-FEB41CDB28DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95C8D85C-75B7-4ADD-B8F0-1623675AC0B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95C8D85C-75B7-4ADD-B8F0-1623675AC0B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95C8D85C-75B7-4ADD-B8F0-1623675AC0B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95C8D85C-75B7-4ADD-B8F0-1623675AC0B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

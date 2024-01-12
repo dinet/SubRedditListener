@@ -40,7 +40,6 @@ namespace SubRedditListner.Services
                         RateLimitReset = httpResponse.Headers.TryGetValues("x-ratelimit-reset", out var rateLimitReset) ? Convert.ToDouble(rateLimitReset.FirstOrDefault()) : 0,
                         RateLimitUsed = httpResponse.Headers.TryGetValues("x-ratelimit-used", out var rateLimitUsed) ? Convert.ToDouble(rateLimitUsed.FirstOrDefault()) : 0
                     };
-
                 }
                 else if (httpResponse.StatusCode == HttpStatusCode.Unauthorized)
                 {
