@@ -50,7 +50,7 @@ internal class Program
 
         IHost host = builder.Build();
         var rateLimiter = host.Services.GetService<IRateLimitedHttpClient>();
-        rateLimiter?.SendAsync($"/r/{ApiConfig.SubRedditName}/new?limit=100");
+        rateLimiter?.SendAsync($"/r/{ApiConfig.SubRedditName}/new");
         host.Run();
 
     }
