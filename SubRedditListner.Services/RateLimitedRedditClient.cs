@@ -59,9 +59,9 @@ namespace SubRedditListner.Services
         {
             Parallel.ForEach(response?.Content?.data?.children, child =>
             {
-                //Insert/update items if either these conditions are met.
-                //1.Item already exists in the database.
-                //2.item Created is greater than application start time(2 mins buffer added as new posts are approximately 2 mins delayed from create time)
+                //Insert/update items if either of these conditions are met.
+                //1.Item already exists in the database.(For updating upvotes and other post stats)
+                //2.item Created time is greater than application start time(2 mins buffer added as new posts are returned from the api approximately 2 mins after create time)
                 if (child?.data != null && (_subredditRepository.ItemExists(child.data?.id) ||
                         DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(child?.data?.created_utc) + 360).LocalDateTime >= Process.GetCurrentProcess().StartTime))
                 {
