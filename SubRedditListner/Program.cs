@@ -9,19 +9,6 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-//IHost host = Host.CreateDefaultBuilder(args)
-//    .ConfigureServices((context,services) =>
-//    {
-//        services.AddHostedService<Worker>();
-//        services.AddHostedService<Worker2>();
-//    })
-//    .UseConsoleLifetime()
-//    .Build();
-
-//host.Run();
-
-
-
 internal class Program
 {
     private static void Main(string[] args)

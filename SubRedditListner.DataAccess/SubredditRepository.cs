@@ -22,6 +22,10 @@ namespace SubRedditListner.DataAccess
         {
             return posts.Values.ToList();
         }
+        public bool ItemExists(string id)
+        {
+            return posts.ContainsKey(id);
+        }
 
         public IList<string> GetPostsWithMostUpvotes()
         {

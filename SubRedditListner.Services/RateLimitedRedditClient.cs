@@ -13,7 +13,6 @@ namespace SubRedditListner.Services
         private readonly IRedditPostClient _redditPostClient;
         private readonly ISubredditRepository _subredditRepository;
         private readonly ILogger<RateLimitedHttpClient> _logger;
-
         public RateLimitedHttpClient(IRedditPostClient redditPostClient, ISubredditRepository subredditRepository, ILogger<RateLimitedHttpClient> logger)
         {
             _redditPostClient = redditPostClient;
@@ -23,16 +22,15 @@ namespace SubRedditListner.Services
 
         public async Task SendAsync()
         {
-            var after = string.Empty;
+
             while (true)
             {
                 try
                 {
-                    var response = await _redditPostClient.GetAsync(after);
-                    after = response?.Content?.data?.after;
+                    var response = await _redditPostClient.GetAsync();
                     int interval = Math.Max(0, response.GetIntervalInMiliSeconds() - 300);
                     InsertToDatabase(response);
-                    _logger.LogDebug($"Interval : {interval}, afterToken: {after} RateLimitReset:{response?.Header?.RateLimitReset}, RateLimitRemaining:{response?.Header?.RateLimitRemaining}");
+                    _logger.LogDebug($"Interval : {interval}, RateLimitReset:{response?.Header?.RateLimitReset}, RateLimitRemaining:{response?.Header?.RateLimitRemaining}");
                     await Task.Delay(interval);
                 }
                 catch (Exception)
@@ -45,13 +43,16 @@ namespace SubRedditListner.Services
         {
             Parallel.ForEach(response?.Content?.data?.children, child =>
             {
-                _subredditRepository.AddOrUpdateItem(new SubRedditPost()
+                if (_subredditRepository.ItemExists(child.data.id) || DateTimeOffset.FromUnixTimeSeconds(Convert.ToInt64(child.data.created_utc)) > DateTimeOffset.UtcNow)
                 {
-                    Id = child.data.id,
-                    Title = child.data.title,
-                    Upvotes = child.data.ups,
-                    UserId = child.data.author
-                });
+                    _subredditRepository.AddOrUpdateItem(new SubRedditPost()
+                    {
+                        Id = child.data.id,
+                        Title = child.data.title,
+                        Upvotes = child.data.ups,
+                        UserId = child.data.author
+                    });
+                }
             });
         }
     }
