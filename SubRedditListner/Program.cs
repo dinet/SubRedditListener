@@ -32,7 +32,7 @@ internal class Program
                             client.DefaultRequestHeaders.Add("User-Agent", ApiConfig.AgentName);
                         });
 
-        builder.Services.AddHttpClient<IRedditPostClient, RedditPostClient>()
+        builder.Services.AddHttpClient<IRedditGetClient, RedditGetClient>()
                         .ConfigureHttpClient((serviceProvider, client) =>
                         {
                             client.BaseAddress = new Uri(ApiConfig.BaseUrl);

@@ -8,5 +8,6 @@ namespace SubRedditListner.DataAccess
         public string Title { get; set; }
         public string UserId { get; set; }
         public int Upvotes { get; set; }
+        public DateTime Created { get; set; }
     }
 }

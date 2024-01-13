@@ -11,13 +11,13 @@ using System.Linq;
 
 namespace SubRedditListner.Services
 {
-    public class RedditPostClient : IRedditPostClient
+    public class RedditGetClient : IRedditGetClient
     {
         private readonly HttpClient _httpClient;
         private readonly IRedditAuthClient _authClient;
-        private readonly ILogger<RedditPostClient> _logger;
+        private readonly ILogger<RedditGetClient> _logger;
 
-        public RedditPostClient(HttpClient httpClient, IRedditAuthClient authClient, ILogger<RedditPostClient> logger)
+        public RedditGetClient(HttpClient httpClient, IRedditAuthClient authClient, ILogger<RedditGetClient> logger)
         {
             _httpClient = httpClient;
             _authClient = authClient;

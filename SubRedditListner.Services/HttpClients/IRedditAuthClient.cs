@@ -1,15 +1,19 @@
 ﻿using SubRedditListner.Services.Models;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SubRedditListner.Services
 {
+    /// <summary>
+    /// Represents a client for retrieving Reddit authentication tokens.
+    /// </summary>
     public interface IRedditAuthClient
     {
-        public Task<RedditAuthResponse?> RetrieveToken();
+        /// <summary>
+        /// Retrieves a Reddit authentication token asynchronously.
+        /// </summary>
+        /// <returns>
+        /// Retrives Reddit auth token.
+        /// </returns>
+        Task<RedditAuthResponse?> RetrieveToken();
     }
 }
