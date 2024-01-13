@@ -1,11 +1,11 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace SubRedditListner.Services.Models
 {
     public class RedditGetResponse
     {
-        public RedditGetResponseContent? Content { get; set; }
-        public RedditGetResponseHeader? Header { get; set; }
+        public RedditGetResponseContent Content { get; set; }
+        public RedditGetResponseHeader Header { get; set; }
 
         public class RedditGetResponseHeader
         {
@@ -20,7 +20,7 @@ namespace SubRedditListner.Services.Models
 
         public class Data
         {
-            public Child[] children { get; set; }
+            public IList<Child> children { get; set; }
         }
 
         public class Child

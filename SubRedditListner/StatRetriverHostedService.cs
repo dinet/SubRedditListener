@@ -31,7 +31,5 @@ namespace SubRedditListner
                 await Task.Delay(1000, stoppingToken);
             }
         }
-
-
     }
 }

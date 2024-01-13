@@ -47,7 +47,7 @@ internal class Program
 
         IHost host = builder.Build();
         var rateLimiter = host.Services.GetService<IRateLimitedHttpClient>();
-        rateLimiter?.SendAsync($"/r/{ApiConfig.SubRedditName}/new");
+        rateLimiter?.SendAsync($"/r/{ApiConfig.SubRedditName}/new", new CancellationToken());
         host.Run();
 
     }

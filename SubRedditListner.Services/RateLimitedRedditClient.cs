@@ -4,6 +4,7 @@ using SubRedditListner.Services.Models;
 using System;
 using System.Diagnostics;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SubRedditListner.Services
@@ -21,9 +22,9 @@ namespace SubRedditListner.Services
             _logger = logger;
         }
 
-        public async Task SendAsync(string url)
+        public async Task SendAsync(string url, CancellationToken cancellationToken)
         {
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
@@ -33,8 +34,8 @@ namespace SubRedditListner.Services
 
                     await InsertToDatabase(response);
                     stopWatch.Stop();
-                    // Calculate interval and log rate limit information
 
+                    // Calculate interval and log rate limit information
                     int interval = CalculateNextInterval(response, stopWatch.ElapsedMilliseconds);
                     // Delay before making the next request
                     await Task.Delay(interval);
