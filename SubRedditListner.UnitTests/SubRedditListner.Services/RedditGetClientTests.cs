@@ -2,11 +2,10 @@
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Xunit;
-using global::SubRedditListner.Services;
+using SubRedditListner.Services;
 using RichardSzalay.MockHttp;
 using System.Net.Http.Json;
-using NSubstitute.ExceptionExtensions;
-using System.Runtime.InteropServices;
+using Shouldly;
 
 
 namespace SubRedditListner.UnitTests.SubRedditListner.Services
@@ -44,7 +43,9 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
             var actualResponse = await _client.GetAsync("/test");
 
             // Assert 
-            Assert.NotNull(actualResponse.Content);
+            actualResponse.Header.ShouldNotBeNull();
+            actualResponse.Content.ShouldNotBeNull();
+            actualResponse.Content.data.children.ShouldNotBeEmpty();
         }
 
 
@@ -60,6 +61,23 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
 
             // Act and Assert 
             await Assert.ThrowsAnyAsync<Exception>(async () => await _client.GetAsync(""));
+        }
+
+        [Fact]
+        public async Task GetAsync_Unauthorized_SetToken()
+        {
+            // Arrange 
+            var expectedResponse = Fixtures.SampleRedditGetResponse;
+
+            _handler
+            .Expect(HttpMethod.Get, $"/test")
+            .Respond(HttpStatusCode.Unauthorized, JsonContent.Create(expectedResponse.Content));
+
+            // Act
+            var actualResponse = await _client.GetAsync("/test");
+
+            // Assert
+            await _redditAuthClient.Received(2).RetrieveToken();
         }
     }
 

@@ -5,7 +5,7 @@ using SubRedditListner.DataAccess;
 using SubRedditListner.Services;
 using SubRedditListner.Services.Models;
 using Xunit;
-using static SubRedditListner.Services.Models.RedditGetResponse;
+using Shouldly;
 
 namespace SubRedditListner.UnitTests.SubRedditListner.Services
 {

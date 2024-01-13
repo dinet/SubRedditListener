@@ -39,6 +39,7 @@ namespace SubRedditListner.Services
             {
                 // Log any exceptions
                 _logger.LogError($"Exception occurred: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                throw;
             }
 
             return authResponse;
