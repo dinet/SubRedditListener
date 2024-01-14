@@ -4,17 +4,17 @@ SubredditListener is a tool developed to continuously monitor a subrreddit in ne
 
 ## Running application
 
-Use Git to clone the repository 
+clone the repository 
 
 ```bash
-https://github.com/dinet/SubRedditListener.git
+git clone https://github.com/dinet/SubRedditListener.git
 ```
 Navigate to SubRedditListner folder
 
 ```bash
-cd [yourfolder]\SubRedditListener\SubRedditListner
+cd SubRedditListener\SubRedditListner
 ```
-Update appsettings.json file your ClientId, ClientSecret and AgentName
+Update appsettings.json file with your ClientId, ClientSecret and AgentName
 ```json
 "ApiConfig": {
   "ClientId": "",
@@ -22,9 +22,13 @@ Update appsettings.json file your ClientId, ClientSecret and AgentName
   "AgentName": "",
   "TokenUrl": "https://www.reddit.com/api/v1/",
   "BaseUrl": "https://oauth.reddit.com/",
-  "SubRedditName": "diy"
+  "SubRedditName": "diy",
+  "StatRetrivalInterval": 2000
 }
 ```
 Run following commands
 ```bash
 dotnet run
+```
+## Swimlane diagram
+![SubRedditListner_Swimlane_Diagram](https://github.com/dinet/SubRedditListener/assets/1454131/accaaa1e-8ebc-4f43-8e2e-a98001ce2024)
