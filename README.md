@@ -29,3 +29,6 @@ Update appsettings.json file with your ClientId, ClientSecret and AgentName
 Run following commands
 ```bash
 dotnet run
+```
+## Swimlane diagram
+![SubRedditListner_Swimlane_Diagram](https://github.com/dinet/SubRedditListener/assets/1454131/accaaa1e-8ebc-4f43-8e2e-a98001ce2024)
