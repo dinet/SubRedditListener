@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SubRedditListner.DataAccess\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SubRedditListner.DataAccess\SubRedditListner.DataAccess.csproj" />
     <ProjectReference Include="..\SubRedditListner.Services\SubRedditListner.Services.csproj" />
     <ProjectReference Include="..\SubRedditListner\SubRedditListner.csproj" />
