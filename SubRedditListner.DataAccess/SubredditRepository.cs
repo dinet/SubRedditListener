@@ -11,7 +11,7 @@ public class SubredditRepository : ISubredditRepository
 {
     private readonly ConcurrentDictionary<string, SubRedditPost> posts = new ConcurrentDictionary<string, SubRedditPost>();
 
-    private ILogger<SubredditRepository> _logger;
+    private readonly ILogger<SubredditRepository> _logger;
 
     public SubredditRepository(ILogger<SubredditRepository> logger)
     {
