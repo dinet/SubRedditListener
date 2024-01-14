@@ -15,10 +15,9 @@ namespace SubRedditListner.UnitTests.SubRedditListner.DataAccess
         public async Task GetUsersWithMostPostsAsync_ReturnsTopUsers()
         {
             //// Arrange
-            ////var posts = Fixtures.SampleRedditGetResponse();
+            var posts = Fixtures.SampleRedditGetResponse;
 
-            //var logger = Substitute.For<ILogger<SubredditRepository>>; 
-
+            var logger = Substitute.For<ILogger<SubredditRepository>>;
         }
     }
 }

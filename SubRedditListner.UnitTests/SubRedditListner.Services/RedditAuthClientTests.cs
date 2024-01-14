@@ -9,7 +9,7 @@ using Shouldly;
 
 namespace SubRedditListner.UnitTests.SubRedditListner.Services
 {
-    public class RedditAuthClientUnitTests
+    public class RedditAuthClientTests
     {
         private readonly MockHttpMessageHandler _handler = new();
         private readonly RedditAuthClient _client;
@@ -17,7 +17,7 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
         private readonly IRedditAuthClient _redditAuthClient;
         private readonly ILogger<RedditAuthClient> _logger;
 
-        public RedditAuthClientUnitTests()
+        public RedditAuthClientTests()
         {
             var httpClient = new HttpClient(_handler)
             {

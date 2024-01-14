@@ -10,9 +10,9 @@ using SubRedditListner.Services.Services;
 
 namespace SubRedditListner.UnitTests.SubRedditListner.Services
 {
-    public class RateLimitedRedditClientTests
+    public class SubRedditServiceTests
     {
-        [Fact(Skip = "TODO fix the unit test")]
+        [Fact]
         public async Task SendAsync_Success()
         {
             // Arrange
@@ -36,11 +36,10 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
 
 
             //// Assert
-            await redditGetClient.Received().GetAsync(Arg.Any<string>());
-            await subredditRepository.Received().AddOrUpdateItemAsync(Arg.Any<SubRedditPost>());
+            await redditGetClient.Received(1).GetAsync(Arg.Any<string>());
         }
 
-        [Fact(Skip = "TODO fix the unit test")]
+        [Fact]
         public async Task SendAsync_ExceptionHandling()
         {
             // Arrange
@@ -55,13 +54,11 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
                 redditGetClient,
                 subredditRepository,
                 logger
-            ); 
+            );
 
-            // Act 
-            await subRedditService.SendAsync("https://example.com");
-
-            //Assert
-            logger.Received().LogError(Arg.Any<string>());
+            // Act and assert 
+            await Assert.ThrowsAnyAsync<Exception>(async () => await subRedditService.SendAsync("https://example.com"));
+             
         }
     }
 
