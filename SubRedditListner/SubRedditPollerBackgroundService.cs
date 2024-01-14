@@ -1,14 +1,6 @@
-﻿using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using SubRedditListner.Configurations;
-using SubRedditListner.DataAccess;
-using SubRedditListner.Services;
 using SubRedditListner.Services.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SubRedditListner
 {
@@ -16,7 +8,7 @@ namespace SubRedditListner
     {
         private ILogger<SubRedditPollerBackgroundService> _logger;
         private ISubRedditService _service;
-        private readonly IOptions<ApiConfig> _apiConfig;
+        private IOptions<ApiConfig> _apiConfig;
 
         public SubRedditPollerBackgroundService(ILogger<SubRedditPollerBackgroundService> logger, ISubRedditService service, IOptions<ApiConfig> apiConfig)
         {
@@ -30,7 +22,7 @@ namespace SubRedditListner
             {
                 try
                 {
-                    int nextInterval = await _service.SendAsync($"/r/{_apiConfig.Value.SubRedditName}/new");
+                    int nextInterval = await _service.SendAsync($"/r/{_apiConfig?.Value?.SubRedditName}/new");
                     await Task.Delay(nextInterval, stoppingToken);
                 }
                 catch (Exception ex)
@@ -39,6 +31,11 @@ namespace SubRedditListner
                 }
             }
 
+        }
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Task Cancelled");
+            return base.StopAsync(cancellationToken);
         }
     }
 }

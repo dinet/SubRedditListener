@@ -31,7 +31,7 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
         }
 
         [Fact]
-        public async Task GetAsync_Success()
+        public async Task GetAsync_Should_Complete_Successfully()
         {
             // Arrange 
             var expectedResponse = Fixtures.SampleRedditGetResponse;
@@ -50,7 +50,7 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
 
 
         [Fact]
-        public async Task GetAsync_Exception_LogError()
+        public async Task GetAsync_On_Exception_Should_ThroewEx()
         {
             // Arrange
             var expectedResponse = Fixtures.SampleRedditGetResponse;
@@ -64,7 +64,7 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
         }
 
         [Fact]
-        public async Task GetAsync_Unauthorized_SetToken()
+        public async Task GetAsync_If_Unauthorized_Should_SetToken()
         {
             // Arrange 
             var expectedResponse = Fixtures.SampleRedditGetResponse;

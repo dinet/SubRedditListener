@@ -28,7 +28,7 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
         }
 
         [Fact]
-        public async Task GetAsync_Success()
+        public async Task GetAsync_Should_Complete_Successfully()
         {
             // Arrange 
             var expectedResponse = Fixtures.SampleAuthResponse;
@@ -47,7 +47,7 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
 
 
         [Fact]
-        public async Task GetAsync_Exception_LogError()
+        public async Task GetAsync_On_Exception_Should_Throw_Ex()
         {
             // Arrange 
             var expectedResponse = Fixtures.SampleAuthResponse;

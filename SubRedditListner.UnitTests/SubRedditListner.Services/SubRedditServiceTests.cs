@@ -3,9 +3,7 @@ using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using SubRedditListner.DataAccess;
 using SubRedditListner.Services;
-using SubRedditListner.Services.Models;
 using Xunit;
-using Shouldly;
 using SubRedditListner.Services.Services;
 
 namespace SubRedditListner.UnitTests.SubRedditListner.Services
@@ -13,7 +11,7 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
     public class SubRedditServiceTests
     {
         [Fact]
-        public async Task SendAsync_Success()
+        public async Task SendAsync_Should_Complete_Successfully()
         {
             // Arrange
             var redditGetClient = Substitute.For<IRedditGetClient>();
@@ -40,7 +38,7 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
         }
 
         [Fact]
-        public async Task SendAsync_ExceptionHandling()
+        public async Task SendAsync_OnException_Should_ThrowEx()
         {
             // Arrange
             var redditGetClient = Substitute.For<IRedditGetClient>();

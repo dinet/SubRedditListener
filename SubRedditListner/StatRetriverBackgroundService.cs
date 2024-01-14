@@ -34,13 +34,18 @@ namespace SubRedditListner
                                $"-------- Total Posts - {(await _subredditRepository.GetAllItemsAsync()).Count} \n" +
                                $"-------- Most Recent Post - {await _subredditRepository.GetLatestPostAsync()}\n\n"
                                );
+                    await Task.Delay(_apiConfig?.Value?.StatRetrivalInterval ?? 0, stoppingToken);
                 }
                 catch (Exception ex)
                 {
                     _logger.LogError("Internall Error occured");
                 }
-                await Task.Delay(_apiConfig.Value.StatRetrivalInterval, stoppingToken);
             }
+        }
+        public override Task StopAsync(CancellationToken cancellationToken)
+        {
+            _logger.LogInformation("Task Cancelled");
+            return base.StopAsync(cancellationToken);
         }
     }
 }
