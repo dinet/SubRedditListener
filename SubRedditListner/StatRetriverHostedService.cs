@@ -18,16 +18,23 @@ namespace SubRedditListner
             while (!stoppingToken.IsCancellationRequested)
             {
 
-                _logger.LogInformation(
-                    $"\n\n ---------------------- Top 10 Posts with most upvotes ----------------- \n" +
-                    $"{string.Join("\n", (await _subredditRepository.GetPostsWithMostUpvotesAsync(10))?.ToArray()?? Array.Empty<string>())} \n" +
-                    "\n -----------------------------------------------------------------------------\n" +
-                    $"\n\n ------------------------- Top 10 Users with most posts ---------------- \n" +
-                    $"{string.Join("\n", (await _subredditRepository.GetUsersWithMostPostsAsync(10))?.ToArray() ?? Array.Empty<string>())} \n " +
-                     "\n -----------------------------------------------------------------------------\n" +
-                    $"-------- Total Posts - {(await _subredditRepository.GetAllItemsAsync()).Count} \n" +
-                    $"-------- Most Recent Post - {await _subredditRepository.GetLatestPostAsync()}\n\n"
-                    );
+                try
+                {
+                    _logger.LogInformation(
+                               $"\n\n ---------------------- Top 10 Posts with most upvotes ----------------- \n" +
+                               $"{string.Join("\n", (await _subredditRepository.GetPostsWithMostUpvotesAsync(10))?.ToArray() ?? Array.Empty<string>())} \n" +
+                               "\n -----------------------------------------------------------------------------\n" +
+                               $"\n\n ------------------------- Top 10 Users with most posts ---------------- \n" +
+                               $"{string.Join("\n", (await _subredditRepository.GetUsersWithMostPostsAsync(10))?.ToArray() ?? Array.Empty<string>())} \n " +
+                                "\n -----------------------------------------------------------------------------\n" +
+                               $"-------- Total Posts - {(await _subredditRepository.GetAllItemsAsync()).Count} \n" +
+                               $"-------- Most Recent Post - {await _subredditRepository.GetLatestPostAsync()}\n\n"
+                               );
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError("Internall Error occured");
+                }
                 await Task.Delay(1000, stoppingToken);
             }
         }
