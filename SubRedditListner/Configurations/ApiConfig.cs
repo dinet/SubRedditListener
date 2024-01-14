@@ -8,5 +8,6 @@
         public string ClientId { get; set; }
         public string ClientSecret { get; set; }
         public string SubRedditName { get; set; }
+        public int StatRetrivalInterval { get; set; }
     }
 }

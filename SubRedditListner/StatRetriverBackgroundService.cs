@@ -1,16 +1,20 @@
+using Microsoft.Extensions.Options;
+using SubRedditListner.Configurations;
 using SubRedditListner.DataAccess;
 
 namespace SubRedditListner
 {
-    public class StatRetriverHostedService : BackgroundService
+    public class StatRetriverBackgroundService : BackgroundService
     {
-        private readonly ILogger<StatRetriverHostedService> _logger;
+        private readonly ILogger<StatRetriverBackgroundService> _logger;
         private readonly ISubredditRepository _subredditRepository;
+        private readonly IOptions<ApiConfig> _apiConfig;
 
-        public StatRetriverHostedService(ILogger<StatRetriverHostedService> logger, ISubredditRepository subredditRepository)
+        public StatRetriverBackgroundService(ILogger<StatRetriverBackgroundService> logger, ISubredditRepository subredditRepository, IOptions<ApiConfig> apiConfig)
         {
             _logger = logger;
             _subredditRepository = subredditRepository;
+            _apiConfig = apiConfig;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -35,7 +39,7 @@ namespace SubRedditListner
                 {
                     _logger.LogError("Internall Error occured");
                 }
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(_apiConfig.Value.StatRetrivalInterval, stoppingToken);
             }
         }
     }

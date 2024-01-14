@@ -5,6 +5,8 @@ using SubRedditListner.DataAccess;
 using SubRedditListner.Services;
 using SubRedditListner.Configurations;
 using System.Text;
+using SubRedditListner.Services.Services;
+using Microsoft.Extensions.Configuration;
 
 internal class Program
 {
@@ -19,7 +21,8 @@ internal class Program
             .AddCommandLine(args)
             .Build();
         var ApiConfig = new ApiConfig();
-        configuration.GetSection("ApiConfig").Bind(ApiConfig);
+        configuration.GetSection(nameof(ApiConfig)).Bind(ApiConfig);
+        builder.Services.Configure<ApiConfig>(configuration.GetSection(nameof(ApiConfig)));
         builder.Services.AddLogging();
 
         builder.Services.AddHttpClient();
@@ -40,14 +43,14 @@ internal class Program
                         });
 
         builder.Services.RemoveAll<IHttpMessageHandlerBuilderFilter>();
-        builder.Services.AddTransient<IRateLimitedHttpClient, RateLimitedHttpClient>();
+        builder.Services.AddTransient<ISubRedditService, SubRedditService>();
         builder.Services.AddSingleton<ISubredditRepository, SubredditRepository>();
 
-        builder.Services.AddHostedService<StatRetriverHostedService>();
+        builder.Services.AddHostedService<SubRedditPollerBackgroundService>();
+        builder.Services.AddHostedService<StatRetriverBackgroundService>();
 
         IHost host = builder.Build();
-        var rateLimiter = host.Services.GetService<IRateLimitedHttpClient>();
-        rateLimiter?.SendAsync($"/r/{ApiConfig.SubRedditName}/new", new CancellationToken());
+
         host.Run();
 
     }

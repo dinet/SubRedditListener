@@ -6,6 +6,7 @@ using SubRedditListner.Services;
 using SubRedditListner.Services.Models;
 using Xunit;
 using Shouldly;
+using SubRedditListner.Services.Services;
 
 namespace SubRedditListner.UnitTests.SubRedditListner.Services
 {
@@ -23,18 +24,15 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
             subredditRepository.ItemExistsAsync(Arg.Any<string>())
                 .Returns(false);
 
-            var logger = Substitute.For<ILogger<RateLimitedHttpClient>>();
+            var logger = Substitute.For<ILogger<SubRedditService>>();
 
-            var rateLimitedHttpClient = new RateLimitedHttpClient(
+            var subRedditService = new SubRedditService(
                 redditGetClient,
                 subredditRepository,
                 logger
             );
-            var cts = new CancellationTokenSource();
-            var token = cts.Token;
-            cts.CancelAfter(TimeSpan.FromSeconds(5));
             // Act
-            await rateLimitedHttpClient.SendAsync("https://example.com", token);
+            await subRedditService.SendAsync("https://example.com");
 
 
             //// Assert
@@ -51,19 +49,16 @@ namespace SubRedditListner.UnitTests.SubRedditListner.Services
                 .Throws(new Exception("Excetion occured"));
 
             var subredditRepository = Substitute.For<ISubredditRepository>();
-            var logger = Substitute.For<ILogger<RateLimitedHttpClient>>();
+            var logger = Substitute.For<ILogger<SubRedditService>>();
 
-            var rateLimitedHttpClient = new RateLimitedHttpClient(
+            var subRedditService = new SubRedditService(
                 redditGetClient,
                 subredditRepository,
                 logger
-            );
-            var cts = new CancellationTokenSource();
-            var token = cts.Token;
-            cts.CancelAfter(TimeSpan.FromSeconds(5));
+            ); 
 
             // Act 
-            await rateLimitedHttpClient.SendAsync("https://example.com", token);
+            await subRedditService.SendAsync("https://example.com");
 
             //Assert
             logger.Received().LogError(Arg.Any<string>());
