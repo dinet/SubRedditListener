@@ -27,5 +27,4 @@ Update appsettings.json file your ClientId, ClientSecret and AgentName
 ```
 Run following commands
 ```bash
-dotnet build
 dotnet run
