@@ -22,7 +22,8 @@ Update appsettings.json file your ClientId, ClientSecret and AgentName
   "AgentName": "",
   "TokenUrl": "https://www.reddit.com/api/v1/",
   "BaseUrl": "https://oauth.reddit.com/",
-  "SubRedditName": "diy"
+  "SubRedditName": "diy",
+  "StatRetrivalInterval": 2000
 }
 ```
 Run following commands
