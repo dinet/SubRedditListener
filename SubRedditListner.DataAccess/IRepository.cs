@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SubRedditListner.DataAccess
 {
-    public interface IRepository<TEntity> where TEntity : class, new()
+    public interface IRepository<TEntity> where TEntity : class
     {
         /// <summary>
         /// Adds or updates a SubRedditPost asynchronously in the repository.

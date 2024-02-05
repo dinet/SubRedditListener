@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SubRedditListner.DataAccess
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly ConcurrentDictionary<string, SubRedditPost> posts = new ConcurrentDictionary<string, SubRedditPost>();
 
