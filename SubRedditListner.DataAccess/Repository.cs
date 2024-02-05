@@ -7,43 +7,31 @@ using System.Threading.Tasks;
 
 namespace SubRedditListner.DataAccess
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
-        protected readonly ConcurrentDictionary<string, SubRedditPost> posts = new ConcurrentDictionary<string, SubRedditPost>();
+        protected readonly ConcurrentDictionary<string, TEntity> posts = new ConcurrentDictionary<string, TEntity>();
 
-        private readonly ILogger<SubredditRepository> _logger;
+        private readonly ILogger<Repository<TEntity>> _logger;
 
-        public Repository(ILogger<SubredditRepository> logger)
+        public Repository(ILogger<Repository<TEntity>> logger)
         {
             _logger = logger;
         }
 
-        public async Task AddOrUpdateItemAsync(SubRedditPost subRedditPost)
+        public async Task<TEntity> GetItemAsync(string id)
         {
             try
             {
-                await Task.Run(() => posts[subRedditPost.Id] = subRedditPost);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Exception occurred in AddOrUpdateItemAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
-            }
-        }
-
-        public async Task<SubRedditPost> GetItemAsync(string id)
-        {
-            try
-            {
-                return await Task.Run(() => posts.TryGetValue(id, out SubRedditPost? subredditPost) ? subredditPost : new SubRedditPost());
+                return await Task.Run(() => posts.TryGetValue(id, out TEntity? subredditPost) ? subredditPost : new TEntity());
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Exception occurred in GetItemAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                return new SubRedditPost();
+                return new TEntity();
             }
         }
 
-        public async Task<IList<SubRedditPost>> GetAllItemsAsync()
+        public async Task<IList<TEntity>> GetAllItemsAsync()
         {
             try
             {
@@ -52,7 +40,7 @@ namespace SubRedditListner.DataAccess
             catch (Exception ex)
             {
                 _logger.LogError($"Exception occurred in GetAllItemsAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                return new List<SubRedditPost>();
+                return new List<TEntity>();
             }
         }
 

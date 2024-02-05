@@ -13,6 +13,19 @@ public class SubredditRepository : Repository<SubRedditPost>, ISubredditReposito
     {
         _logger = logger;
     }
+
+    public async Task AddOrUpdateItemAsync(SubRedditPost subRedditPost)
+    {
+        try
+        {
+            await Task.Run(() => posts[subRedditPost.Id] = subRedditPost);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Exception occurred in AddOrUpdateItemAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
+        }
+    }
+
     public async Task<IList<string>> GetPostsWithMostUpvotesAsync(int resultCount)
     {
         try

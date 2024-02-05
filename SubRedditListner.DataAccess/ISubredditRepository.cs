@@ -7,6 +7,13 @@ namespace SubRedditListner.DataAccess
     {
 
         /// <summary>
+        /// Adds or updates a SubRedditPost asynchronously in the repository.
+        /// </summary>
+        /// <param name="subRedditPost">The SubRedditPost to add or update.</param>
+        /// <returns>A Task representing the asynchronous operation.</returns>
+        Task AddOrUpdateItemAsync(SubRedditPost subRedditPost);
+
+        /// <summary>
         /// Retrieves a list of post names with the most upvotes asynchronously from the repository.
         /// </summary>
         /// <param name="resultCount">The number of results to retrieve.</param>
