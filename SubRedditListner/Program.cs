@@ -41,9 +41,10 @@ internal class Program
                             client.BaseAddress = new Uri(ApiConfig.BaseUrl);
                             client.DefaultRequestHeaders.Add("User-Agent", ApiConfig.AgentName);
                         });
-
+        //Remove additional logging from HttpClient
         builder.Services.RemoveAll<IHttpMessageHandlerBuilderFilter>();
         builder.Services.AddTransient<ISubRedditService, SubRedditService>();
+        builder.Services.AddSingleton(typeof(IRepository<>), typeof(Repository<>));
         builder.Services.AddSingleton<ISubredditRepository, SubredditRepository>();
 
         builder.Services.AddHostedService<SubRedditPollerBackgroundService>();

@@ -1,74 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
 using SubRedditListner.DataAccess;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-public class SubredditRepository : ISubredditRepository
+public class SubredditRepository : Repository<SubRedditPost>, ISubredditRepository
 
 {
-    private readonly ConcurrentDictionary<string, SubRedditPost> posts = new ConcurrentDictionary<string, SubRedditPost>();
-
     private readonly ILogger<SubredditRepository> _logger;
-
-    public SubredditRepository(ILogger<SubredditRepository> logger)
+    public SubredditRepository(ILogger<SubredditRepository> logger) : base(logger)
     {
         _logger = logger;
     }
-    public async Task AddOrUpdateItemAsync(SubRedditPost subRedditPost)
-    {
-        try
-        {
-            await Task.Run(() => posts[subRedditPost.Id] = subRedditPost);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Exception occurred in AddOrUpdateItemAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
-        }
-    }
-
-    public async Task<SubRedditPost> GetItemAsync(string id)
-    {
-        try
-        {
-            return await Task.Run(() => posts.TryGetValue(id, out SubRedditPost? subredditPost) ? subredditPost : new SubRedditPost());
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Exception occurred in GetItemAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
-            return new SubRedditPost();
-        }
-    }
-
-    public async Task<IList<SubRedditPost>> GetAllItemsAsync()
-    {
-        try
-        {
-            return await Task.Run(() => posts.Values.ToList());
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Exception occurred in GetAllItemsAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
-            return new List<SubRedditPost>();
-        }
-    }
-
-    public async Task<bool> ItemExistsAsync(string id)
-    {
-        try
-        {
-            return await Task.Run(() => posts.ContainsKey(id));
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError($"Exception occurred in {nameof(ItemExistsAsync)}: {ex.Message}\nStackTrace: {ex.StackTrace}");
-            return false;
-        }
-    }
-
-
     public async Task<IList<string>> GetPostsWithMostUpvotesAsync(int resultCount)
     {
         try
